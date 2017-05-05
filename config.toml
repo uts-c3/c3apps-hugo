@@ -1,0 +1,53 @@
+baseurl = "https://uts-c3.github.io/"
+title = "UTS-C3 Applications"
+theme = "hugo-creative-portfolio-theme"
+languageCode = "en-us"
+# Enable comments by entering your Disqus shortname
+disqusShortname = ""
+# Enable Google Analytics by entering your tracking code
+googleAnalytics = ""
+
+[params]
+  # Style options: default (pink), blue, green, pink, red, sea, violet
+  # Use custom.css for your custom styling
+  style = "blue"
+  description = "C3 applications"
+  copyright = "CC - UTS-C3"
+  sidebarAbout = [
+"The Climate Change Cluster (C3) undertakes integrated and interdisciplinary research at the intersection of the Physical and Life Sciences."
+]
+  # Contact page
+     # Since this template is static, the contact form uses www.formspree.io as a
+     # proxy. The form makes a POST request to their servers to send the actual
+     # email. Visitors can send up to a 1000 emails each month for free.
+     #
+     # What you need to do for the setup?
+     #
+     # - set your email address under 'email' below
+     # - upload the generated site to your server
+     # - send a dummy email yourself to confirm your account
+     # - click the confirm link in the email from www.formspree.io
+     # - you're done. Happy mailing!
+  email = "c3@uts.edu.au"
+  PygmentsCodeFences = true
+  pygmentsstyle = "vs"
+
+  # Nav links in the side bar
+  [[params.navlinks]]
+  name = "Home"
+  url = ""
+
+  [[params.navlinks]]
+  name = "About"
+  url = "about/"
+
+  [[params.navlinks]]
+  name = "Get in touch"
+  url = "contact/"
+
+  [params.social]
+  facebook      = "full page or profile url in facebook"
+  googleplus    = "full profile url in googleplus"
+  email         = "email@example.com"
+  twitter       = "full profile url in twitter"
+  github        = "full profile url in github"
