@@ -17,6 +17,14 @@ Note: to get a full list of possible parameters and a short description of each 
 
 
 ---
+# Download and documentation
+
+For download please visit the official [ampli-tools github repository page](https://github.com/timkahlke/ampli-tools).
+
+---
+---
+
+# Content
 
 ### docs/amplicon_pipeline.pdf
 
