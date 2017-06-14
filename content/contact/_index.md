@@ -7,7 +7,7 @@ title = "Get in touch"
 - Email: c3admin@uts.edu.au
 
 
-**Phisical adress**
+**Physical address**
 
 > Building 4,
 > Room CB04.06.337
