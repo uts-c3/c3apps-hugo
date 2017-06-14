@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = http://github.com/uts-c3/uts-c3.github.io
+	branch = master
