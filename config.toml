@@ -46,8 +46,6 @@ googleAnalytics = ""
   url = "contact/"
 
   [params.social]
-  facebook      = "full page or profile url in facebook"
-  googleplus    = "full profile url in googleplus"
-  email         = "email@example.com"
-  twitter       = "full profile url in twitter"
-  github        = "full profile url in github"
+  email         = "3@uts.edu.au"
+  twitter       = "https://twitter.com/uts_c3"
+  github        = "https://uts-c3.github.io/"
