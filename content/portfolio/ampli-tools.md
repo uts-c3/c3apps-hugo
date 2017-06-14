@@ -2,7 +2,7 @@
 image = "img/portfolio/mol.jpeg"
 showonlyimage = false
 date = "2017-06-14T08:44:32+05:30"
-title = "BASTA"
+title = "ampli-tools"
 draft = false
 weight = 1
 +++
