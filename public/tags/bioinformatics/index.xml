@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bioinformatics on UTS-C3 Software</title>
+    <link>https://uts-c3.github.io/tags/bioinformatics/</link>
+    <description>Recent content in Bioinformatics on UTS-C3 Software</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Leo Hardtke</copyright>
+    <lastBuildDate>Wed, 14 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/bioinformatics/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>BASTA</title>
+      <link>https://uts-c3.github.io/project/basta/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://uts-c3.github.io/project/basta/</guid>
+      <description>
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;ba-sic-s-equence-t-axonomy-a-nnotation&#34;&gt;&lt;strong&gt;BA&lt;/strong&gt;sic &lt;strong&gt;S&lt;/strong&gt;equence &lt;strong&gt;T&lt;/strong&gt;axonomy &lt;strong&gt;A&lt;/strong&gt;nnotation&lt;/h3&gt;
+
+&lt;p&gt;As the name implies, &lt;strong&gt;BASTA&lt;/strong&gt; assigns taxonomies to sequences or groups of sequences based on the Last Common Ancestor (LCA) of a number of best hits. BASTA can be customised to run on any kind of tabular output (default = blast -outfmt 6) as long as the input file provides values for e-value, percent identity and alignment length. Taxonomies are inferred from NCBI taxonomies based on a 7 level taxonomy.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;download-and-documentation&#34;&gt;Download and documentation&lt;/h1&gt;
+
+&lt;p&gt;The latest &lt;a href=&#34;https://github.com/timkahlke/BASTA/releases&#34; target=&#34;_blank&#34;&gt;release candidate&lt;/a&gt; as well as the &lt;a href=&#34;https://github.com/timkahlke/BASTA/wiki&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; with detailed installation and usage instructions can be found on the official &lt;a href=&#34;https://github.com/timkahlke/BASTA&#34; target=&#34;_blank&#34;&gt;BASTA github repository page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
+
+&lt;p&gt;BASTA uses levelDB (&lt;a href=&#34;https://github.com/google/leveldb&#34; target=&#34;_blank&#34;&gt;https://github.com/google/leveldb&lt;/a&gt;) and the python wrapper Plyvel as a local database to hold NCBI mappings and taxonomies. Additionally, BASTA requires the non-standrad python packages&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;gzip&lt;/li&gt;
+&lt;li&gt;hashlib&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To generate Krona plots from BASTA taxonomies please also install Krona (&lt;a href=&#34;https://github.com/marbl/Krona/wiki/KronaTools&#34; target=&#34;_blank&#34;&gt;https://github.com/marbl/Krona/wiki/KronaTools&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;For a detailed installation guide please visit &lt;a href=&#34;https://github.com/timkahlke/BASTA/wiki&#34; target=&#34;_blank&#34;&gt;https://github.com/timkahlke/BASTA/wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;quick-start&#34;&gt;Quick start&lt;/h1&gt;
+
+&lt;h2 id=&#34;inital-setup&#34;&gt;Inital Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# set up NCBI taxonomy database
+./bin/basta taxonomy
+
+# download and set up genbank and uniprot mappings
+# NOTE: this might not be needed for you. See Wiki for details
+./bin/basta download gb
+./bin/basta download prot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;running-basta&#34;&gt;Running BASTA&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Infer one LCA for each query sequence of blast against uniprot
+./bin/basta sequence BLAST_OUTPUT_FILE BASTA_OUTPUT_FILE prot
+
+# Infer one LCA for the complete blast output file
+./bin/basta single BLAST_OUTPUT_FILE prot
+
+# Infer one LCA for each blast output file in a given directory
+./bin/basta multiple BLAST_OUTPUT_DIRECTORY BASTA_OUTPUT_FILE prot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;last-common-ancestor-algorithm&#34;&gt;Last Common Ancestor algorithm&lt;/h1&gt;
+
+&lt;p&gt;BASTA supports two algorithms: &lt;strong&gt;all&lt;/strong&gt; and &lt;strong&gt;majority&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;all&#34;&gt;All&lt;/h3&gt;
+
+&lt;p&gt;If this method is used BASTA reads a given number of best hits for each query sequence and returns the LCA of all sequences (unknown taxonomic levels in database hits are ignored).&lt;/p&gt;
+
+&lt;p&gt;Additionally, if the &lt;em&gt;lazy&lt;/em&gt; option is used, the user defined minimum number &lt;em&gt;n&lt;/em&gt; of hits that is needed to estimate taxonomies will be discarded for sequences with a total hit number &amp;lt;n. Set values for e-value, identity, alignment length etc still apply.&lt;/p&gt;
+
+&lt;h3 id=&#34;majority&#34;&gt;Majority&lt;/h3&gt;
+
+&lt;p&gt;In this case BASTA determines the LCA based on the LCA of the majority of given best hits. Example: if maximum best hit number is set to 5 and 3 best hits are Bacteria and 2 best hits are Archaea, BASTA returns Bacteria as LCA.&lt;/p&gt;
+
+&lt;h1 id=&#34;additional-scripts&#34;&gt;Additional scripts&lt;/h1&gt;
+
+&lt;h3 id=&#34;basta2krona-py&#34;&gt;basta2krona.py&lt;/h3&gt;
+
+&lt;p&gt;This creates a krona plot (html file) that can be opened in your browser from a basta annotation output file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./scripts/basta2krona BASTA_OUTPUT_FILE KRONA_HTML_FILE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;filter-fasta-py&#34;&gt;filter_fasta.py&lt;/h3&gt;
+
+&lt;p&gt;This script can be used to filter a given fasta file based on BASTA annotations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./scripts/filter_fasta.py [options] FASTA_FILE FILTERED_OUTPUT_FILE NAME_OF_TAXON BASTA_FILE
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Panbiom</title>
+      <link>https://uts-c3.github.io/project/panbiom/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://uts-c3.github.io/project/panbiom/</guid>
+      <description>
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;download-and-documentation&#34;&gt;Download and documentation&lt;/h1&gt;
+
+&lt;p&gt;The source code is freely available on the official &lt;a href=&#34;https://github.com/timkahlke/panbiom&#34; target=&#34;_blank&#34;&gt;panbiom github repository page&lt;/a&gt;. Documentation and use cases can be found on the projects &lt;a href=&#34;https://github.com/timkahlke/panbiom/wiki&#34; target=&#34;_blank&#34;&gt;wikipage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;usage&#34;&gt;Usage&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;panbiom.py [options] BIOM_FILE OUTPUT_FILE
+
+Options:
+-t, --treatments
+List of samples (treatments) that should be considered for analysis
+
+-m, --abundance_minimum: Minimum abundance (between 0-1) an OTU must have to be considered present (default: 0.0)
+
+-p, --abundance_parameter: Defines whether the abundance threshold should be based on the complete data set (c) or on the defined treatments (t) (default: t)
+
+-r, --replicate_threshold: If groups/replicates are defined in the treatments file (second column) the given abundance threshold has to be met in at least given number of replicates.
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ampli-tools</title>
+      <link>https://uts-c3.github.io/project/ampli-tool/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://uts-c3.github.io/project/ampli-tool/</guid>
+      <description>
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;metagenomic-amplicon-analysis-pipeline&#34;&gt;Metagenomic Amplicon analysis pipeline&lt;/h3&gt;
+
+&lt;p&gt;Collection of helper scripts for amplicon sequence analysis, e.g. as outlined in the workflow in the docs directory.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;download-and-documentation&#34;&gt;Download and documentation&lt;/h1&gt;
+
+&lt;p&gt;For download please visit the official &lt;a href=&#34;https://github.com/timkahlke/ampli-tools&#34; target=&#34;_blank&#34;&gt;ampli-tools github repository page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;content&#34;&gt;Content&lt;/h1&gt;
+
+&lt;h3 id=&#34;docs-amplicon-pipeline-pdf&#34;&gt;docs/amplicon_pipeline.pdf&lt;/h3&gt;
+
+&lt;p&gt;This &lt;a href=&#34;https://github.com/timkahlke/ampli-tools/blob/master/docs/amplicon_pipeline.pdf&#34; target=&#34;_blank&#34;&gt;pdf&lt;/a&gt;
+ outlines the amplicon analysis workflow used and taught by c3 researchers.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;addsamplequalbyfastq-pl&#34;&gt;addSampleQualByFastq.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to add qualifier &amp;ldquo;sample&amp;rdquo; to fasta header to be able to use a fasta file with Qiime.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: addSamplQualByFasta -q FASTQ_DIR -f FASTA_FILE -o OUTPUT_FILE -m MAPPING_FILE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;batchcountfastqseqs-pl&#34;&gt;batchCountFastqSeqs.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to count sequences of all fastq files in given directory. Prints out a list of &amp;ldquo;filename: SEQ_NUM&amp;rdquo; Additionally performs basic check of correct format, i.e., checks that number of line is a multiple of 4&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: batchCountFastqSeqs.pl -d FASTQ_DIRECTORY
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;batchrenamefiles-pl&#34;&gt;batchRenameFiles.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to rename all files in a directory. It splits all files of given extension at a given separator and concatenates a given number of split segments to a new file name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: batchRenameFiles.pl -d INPUT_FILE_DIRECTORY -f NUMBER_OF_SEGMETNS_TO_KEEP -e FILE_EXTENSION
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;convert-to-qiime-pl&#34;&gt;convert_to_qiime.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to convert the output of addSampleQualByFastq.pl to Qiime split_libraries output (e.g. for use with picrust).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: convert_to_qiime.pl -i INPUT_FASTA_FILE -o OUTPUT_FASTA_FILE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;demultiplex-pl&#34;&gt;demultiplex.pl&lt;/h3&gt;
+
+&lt;p&gt;Simple demultiplexing script for dual barcode single-end reads of structure:&lt;/p&gt;
+
+&lt;p&gt;BARCODE (fw) - PRIMER (fw) - INSERT - PRIMER (rv) - BARCODE (rv) - ILLUMINA PRIMER&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: demultiplex [-c -f] -i FASTQ -m MOTHUR_OLIGOS -o OUTPUT_DIR
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;extract-seqs-from-aln-pl&#34;&gt;extract_seqs_from_aln.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to extract sequences in given un-aligned fasta file from aligned fasta file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: extract_seqs_from_aln.pl -i ALIGNED_INPUT_FASTA_FILE -o ALIGNED_OUTPUT_FASTA_FILE -f UNALIGNED_FASTA_FILE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;extract-seqs-from-fasta-pl&#34;&gt;extract_seqs_from_fasta.pl&lt;/h3&gt;
+
+&lt;p&gt;Script to extract sequences form a fasta file based on a given list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: -i INPUT_FASTA_FILE -o OUTPUT_FASTA_FILE -l SEQUENCE_LIST
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

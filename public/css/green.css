@@ -1,0 +1,115 @@
+/*************************************************
+ *  An Example Green Theme for Hugo Academic
+ *  Set `custom_css = ["green.css"] in `config.toml`.
+ *  Then save this file as `/static/css/green.css` relative to your website root (i.e. not in `themes/academic` directory).
+ *  https://github.com/gcushen/hugo-academic
+ **************************************************/
+
+a,
+a:visited,
+h3.article-title a:hover {
+    color: rgb(76,175,80);
+}
+
+a:hover {
+    color: rgb(0,230,118);
+}
+.navbar {
+  min-height: 80px !important;
+}
+
+.navbar-brand, .navbar-nav li a {
+	height: inherit;
+	line-height: 50px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.navbar-default .navbar-nav li a:hover,
+.btn-primary,
+.btn-primary.btn-outline {
+    color: #8AD9F3; /*NAVBAR LINKS! hover*/
+}
+
+.navbar-default .navbar-nav li a,
+.btn-primary,
+.btn-primary.btn-outline {
+    color: #EEEEEC; /*NAVBAR LINKS normal!*/
+}
+
+.navbar nav > .active > a {
+    color: #EEEEEC;
+}
+
+/* Articles */
+
+.article-title a {
+    color: #151515;
+}
+
+.article-metadata a {
+    color: #888;
+}
+
+.article-metadata a:hover {
+    color: rgb(76,175,80);
+}
+
+/* Standard buttons */
+
+.btn-primary,
+.btn-primary.btn-outline {
+    border-color: rgb(76,175,80);
+}
+
+/* Hover buttons */
+
+.btn-primary.btn-outline:hover {
+    border-color: rgb(76,175,80);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:visited,
+.btn-primary.btn-outline:active {
+    background-color: #000000;
+}
+
+/* Navbar */
+.navbar-default {
+  background: #00749B;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(0,0,0,.11);
+}
+
+.navbar-default .navbar-brand {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+	color: #8AD9F3;
+	background-color: transparent;
+}
+
+#profile .portrait {
+	width: 340px;
+	height: 210px;
+	margin: 0 auto;
+	border-radius: 0%;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+}
+body {
+	font-family: inherit;
+	font-size: 0.9em;
+	line-height: inherit;
+	color: inherit;
+}
+.home-section:first-of-type {
+	padding-top: 30px;
+}
